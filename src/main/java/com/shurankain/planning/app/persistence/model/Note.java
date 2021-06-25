@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-@Document
+@Document(collection = "notes")
 public class Note {
     @Id
     private String id;
