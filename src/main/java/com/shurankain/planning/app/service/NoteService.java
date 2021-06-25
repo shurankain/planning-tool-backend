@@ -16,10 +16,13 @@ import com.shurankain.planning.app.persistence.repsoitory.NoteRepository;
 public class NoteService {
 
     private final NoteRepository noteRepository;
+    private final TaskService taskService;
 
     @Autowired
-    public NoteService(NoteRepository noteRepository) {
+    public NoteService(NoteRepository noteRepository,
+                       TaskService taskService) {
         this.noteRepository = noteRepository;
+        this.taskService = taskService;
     }
 
     public List<Note> getAllNotes() {
@@ -46,16 +49,12 @@ public class NoteService {
                 .noteText(noteDto.getNoteText())
                 .creationDate(LocalDateTime.now())
                 .tasks(convertToTasksList(noteDto.getTasks()))
-            .build());
-}
+                .build());
+    }
 
     private List<Task> convertToTasksList(List<String> tasksInfo) {
-        return tasksInfo.stream().map(taskInfo ->
-                    Task.builder()
-                            .taskInfo(taskInfo)
-                            .creationDate(LocalDateTime.now())
-                            .completionStatus(false)
-                            .build()
-        ).collect(Collectors.toList());
+        return tasksInfo.stream()
+                .map(taskService::addTask)
+                .collect(Collectors.toList());
     }
 }
