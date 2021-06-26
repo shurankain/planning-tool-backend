@@ -47,11 +47,11 @@ public class NoteService {
         return noteRepository.insert(Note.builder()
                 .noteText(noteDto.getNoteText())
                 .creationDate(LocalDateTime.now())
-                .tasks(convertToTasksList(noteDto.getTasks()))
+                .tasks(saveTasksToObtainId(noteDto.getTasks()))
                 .build());
     }
 
-    private List<Task> convertToTasksList(List<String> tasksInfo) {
+    private List<Task> saveTasksToObtainId(List<String> tasksInfo) {
         return tasksInfo.stream()
                 .map(taskService::addTask)
                 .collect(Collectors.toList());
