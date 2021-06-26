@@ -19,6 +19,11 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
+    public Task getTaskById(String id) {
+        return taskRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("No task with such id found :: " + id));
+    }
+
     public Task addTask(String taskInfo) {
         return taskRepository.insert(Task.builder()
                 .taskInfo(taskInfo)
@@ -28,8 +33,7 @@ public class TaskService {
     }
 
     public Task editTask(TaskDto taskDto) {
-        var retrievedTask = taskRepository.findById(taskDto.getId())
-                .orElseThrow(() -> new IllegalStateException("No task with such id found :: " + taskDto.getId()));
+        var retrievedTask = getTaskById(taskDto.getId());
 
         retrievedTask.setTaskInfo(taskDto.getTaskInfo());
         retrievedTask.setCreationDate(taskDto.getCreationDate());
