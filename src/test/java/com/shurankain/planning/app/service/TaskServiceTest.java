@@ -27,9 +27,9 @@ import com.shurankain.planning.app.persistence.repsoitory.TaskRepository;
 @ExtendWith(MockitoExtension.class)
 class TaskServiceTest {
 
-    public static final String TEST_TASK_ID = "testTaskId";
-    public static final String TEST_TASK_INFO = "testTaskInfo";
-    public static final LocalDateTime TEST_TASK_DATE = LocalDateTime.of(2021, 6, 26, 11, 20);
+    public static final String TASK_ID = "testTaskId";
+    public static final String TASK_INFO = "testTaskInfo";
+    public static final LocalDateTime CREATION_DATE = LocalDateTime.of(2021, 6, 26, 11, 20);
 
     @Captor
     private ArgumentCaptor<Task> taskCaptor;
@@ -42,56 +42,56 @@ class TaskServiceTest {
     void whenAddTaskCalledThenSavedTaskInfoShouldBeReturned() {
         when(taskRepository.insert(any(Task.class))).thenReturn(createMockTask());
 
-        var addedTask = taskService.addTask(TEST_TASK_INFO);
+        var addedTask = taskService.addTask(TASK_INFO);
 
         verify(taskRepository, times(1)).insert(taskCaptor.capture());
-        assertEquals(TEST_TASK_ID, addedTask.getId());
-        assertEquals(TEST_TASK_INFO, addedTask.getTaskInfo());
-        assertEquals(TEST_TASK_DATE, addedTask.getCreationDate());
+        assertEquals(TASK_ID, addedTask.getId());
+        assertEquals(TASK_INFO, addedTask.getTaskInfo());
+        assertEquals(CREATION_DATE, addedTask.getCreationDate());
         assertFalse(addedTask.isCompletionStatus());
 
         Task capturedTask = taskCaptor.getValue();
         assertNull(capturedTask.getId());
-        assertEquals(TEST_TASK_INFO, capturedTask.getTaskInfo());
+        assertEquals(TASK_INFO, capturedTask.getTaskInfo());
         assertNotNull(capturedTask.getCreationDate());
         assertFalse(capturedTask.isCompletionStatus());
     }
 
     @Test
     void whenEditTaskMethodInvokedWithProperDataThenTaskIdUpdated() {
-        when(taskRepository.findById(TEST_TASK_ID)).thenReturn(Optional.of(createMockTask()));
+        when(taskRepository.findById(TASK_ID)).thenReturn(Optional.of(createMockTask()));
         when(taskRepository.save(any(Task.class))).thenReturn(createMockTask());
 
         var addedTask = taskService.editTask(createMockTaskDto());
 
-        verify(taskRepository, times(1)).findById(TEST_TASK_ID);
+        verify(taskRepository, times(1)).findById(TASK_ID);
         verify(taskRepository, times(1)).save(taskCaptor.capture());
-        assertEquals(TEST_TASK_ID, addedTask.getId());
-        assertEquals(TEST_TASK_INFO, addedTask.getTaskInfo());
-        assertEquals(TEST_TASK_DATE, addedTask.getCreationDate());
+        assertEquals(TASK_ID, addedTask.getId());
+        assertEquals(TASK_INFO, addedTask.getTaskInfo());
+        assertEquals(CREATION_DATE, addedTask.getCreationDate());
         assertFalse(addedTask.isCompletionStatus());
 
         Task capturedTask = taskCaptor.getValue();
-        assertEquals(TEST_TASK_ID, capturedTask.getId());
-        assertEquals(TEST_TASK_INFO, capturedTask.getTaskInfo());
-        assertEquals(TEST_TASK_DATE, capturedTask.getCreationDate());
+        assertEquals(TASK_ID, capturedTask.getId());
+        assertEquals(TASK_INFO, capturedTask.getTaskInfo());
+        assertEquals(CREATION_DATE, capturedTask.getCreationDate());
         assertFalse(capturedTask.isCompletionStatus());
     }
 
     private Task createMockTask() {
         return Task.builder()
-                .id(TEST_TASK_ID)
-                .taskInfo(TEST_TASK_INFO)
-                .creationDate(TEST_TASK_DATE)
+                .id(TASK_ID)
+                .taskInfo(TASK_INFO)
+                .creationDate(CREATION_DATE)
                 .completionStatus(false)
                 .build();
     }
 
     private TaskDto createMockTaskDto() {
         return TaskDto.builder()
-                .id(TEST_TASK_ID)
-                .taskInfo(TEST_TASK_INFO)
-                .creationDate(TEST_TASK_DATE)
+                .id(TASK_ID)
+                .taskInfo(TASK_INFO)
+                .creationDate(CREATION_DATE)
                 .completionStatus(false)
                 .build();
     }
