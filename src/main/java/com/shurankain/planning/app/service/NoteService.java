@@ -44,7 +44,6 @@ public class NoteService {
     }
 
     public Note addNote(NoteDto noteDto) {
-
         return noteRepository.insert(Note.builder()
                 .noteText(noteDto.getNoteText())
                 .creationDate(LocalDateTime.now())
