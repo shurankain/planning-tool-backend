@@ -24,16 +24,16 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    @GetMapping("/tasks/all")
+    public ResponseEntity<List<Task>> getAllNotes() {
+        List<Task> tasks = taskService.getAllTasks();
+        return ResponseEntity.ok().body(tasks);
+    }
+
     @GetMapping("/tasks/{id}")
     public ResponseEntity<Task> getNoteById(@PathVariable String id) {
         var task = taskService.getTaskById(id);
         return ResponseEntity.ok().body(task);
-    }
-
-    @GetMapping("/tasks")
-    public ResponseEntity<List<Task>> getAllNotes() {
-        List<Task> tasks = taskService.getAllTasks();
-        return ResponseEntity.ok().body(tasks);
     }
 
     @GetMapping("/tasks/total")
