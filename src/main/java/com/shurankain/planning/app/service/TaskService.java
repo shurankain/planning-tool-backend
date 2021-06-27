@@ -29,20 +29,16 @@ public class TaskService {
                 .orElseThrow(() -> new IllegalStateException("No task with such id found :: " + id));
     }
 
-    public Task addTask(String taskInfo) {
-        return taskRepository.insert(Task.builder()
-                .taskInfo(taskInfo)
-                .creationDate(LocalDateTime.now())
-                .completionStatus(false)
-                .build());
-    }
-
     public Long getTotalTasksAmount() {
         return taskRepository.count();
     }
 
     public Long getUncompletedTasksAmount() {
         return taskRepository.countAllByCompletionStatusIsFalse();
+    }
+
+    public Task addTask(String taskInfo) {
+        return taskRepository.insert(constructTask(taskInfo));
     }
 
     public Task editTask(TaskDto taskDto) {
@@ -53,5 +49,13 @@ public class TaskService {
         retrievedTask.setCompletionStatus(taskDto.getCompletionStatus());
 
         return taskRepository.save(retrievedTask);
+    }
+
+    private Task constructTask(String taskInfo){
+        return Task.builder()
+                .taskInfo(taskInfo)
+                .creationDate(LocalDateTime.now())
+                .completionStatus(false)
+                .build();
     }
 }

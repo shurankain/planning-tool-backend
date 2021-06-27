@@ -37,19 +37,19 @@ public class NotesController {
         return ResponseEntity.ok().body(note);
     }
 
-    @GetMapping("/notes")
-    public ResponseEntity<List<Note>> getNoteByText(@RequestParam String text) {
-        var notes = noteService.getNotesByTextPresent(text);
-        return ResponseEntity.ok().body(notes);
-    }
-
     @GetMapping("/notes/total")
     public ResponseEntity<Long> getTotalNotesAmount() {
         var notes = noteService.getTotalNotesAmount();
         return ResponseEntity.ok().body(notes);
     }
 
-    @PostMapping("/notes")
+    @GetMapping("/notes")
+    public ResponseEntity<List<Note>> getNoteByText(@RequestParam String text) {
+        var notes = noteService.getNotesByTextPresent(text);
+        return ResponseEntity.ok().body(notes);
+    }
+
+    @PostMapping("/notes/add")
     public ResponseEntity<Note> addNote(@RequestBody NoteDto note) {
         var insertedNote = noteService.addNote(note);
         return ResponseEntity.ok().body(insertedNote);
