@@ -34,9 +34,8 @@ public class NoteService {
                 .orElseThrow(() -> new IllegalStateException("No note with such id found :: " + id));
     }
 
-    public Note getNoteByTextPresent(String text) {
-        return noteRepository.findNoteByNoteTextContaining(text)
-                .orElseThrow(() -> new IllegalStateException("No note with such text found :: " + text));
+    public List<Note> getNotesByTextPresent(String text) {
+        return noteRepository.findAllByNoteTextContaining(text);
     }
 
     public Long getTotalNotesAmount() {
