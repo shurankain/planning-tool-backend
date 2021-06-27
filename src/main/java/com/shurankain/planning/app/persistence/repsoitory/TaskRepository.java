@@ -7,4 +7,6 @@ import com.shurankain.planning.app.persistence.model.Task;
 
 @Repository
 public interface TaskRepository extends MongoRepository<Task, String> {
+
+    Long countAllByCompletionStatusIsFalse();
 }

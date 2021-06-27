@@ -1,6 +1,7 @@
 package com.shurankain.planning.app.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,10 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
+    public List<Task> getAllTasks() {
+        return taskRepository.findAll();
+    }
+
     public Task getTaskById(String id) {
         return taskRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("No task with such id found :: " + id));
@@ -30,6 +35,14 @@ public class TaskService {
                 .creationDate(LocalDateTime.now())
                 .completionStatus(false)
                 .build());
+    }
+
+    public Long getTotalTasksAmount() {
+        return taskRepository.count();
+    }
+
+    public Long getUncompletedTasksAmount() {
+        return taskRepository.countAllByCompletionStatusIsFalse();
     }
 
     public Task editTask(TaskDto taskDto) {
