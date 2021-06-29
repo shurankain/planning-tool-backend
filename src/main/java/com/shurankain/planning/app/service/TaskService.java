@@ -51,7 +51,7 @@ public class TaskService {
         return taskRepository.save(retrievedTask);
     }
 
-    private Task constructTask(String taskInfo){
+    private Task constructTask(String taskInfo) {
         return Task.builder()
                 .taskInfo(taskInfo)
                 .creationDate(LocalDateTime.now())

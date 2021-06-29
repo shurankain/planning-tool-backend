@@ -9,5 +9,4 @@ class PlanningToolBackendTests {
     @Test
     void contextLoads() {
     }
-
 }
