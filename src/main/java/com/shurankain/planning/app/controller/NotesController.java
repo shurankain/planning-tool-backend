@@ -49,4 +49,10 @@ public class NotesController {
         var insertedNote = noteService.addNote(note);
         return ResponseEntity.ok().body(insertedNote);
     }
+
+    @DeleteMapping("/notes/{id}")
+    public ResponseEntity<Object> deleteNote(@PathVariable String id) {
+        noteService.deleteNote(id);
+        return ResponseEntity.ok().build();
+    }
 }

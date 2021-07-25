@@ -50,6 +50,10 @@ public class NoteService {
                 .build());
     }
 
+    public void deleteNote(String id) {
+        noteRepository.deleteById(id);
+    }
+
     private List<Task> saveTasksToObtainId(List<String> tasksInfo) {
         return tasksInfo.stream()
                 .map(taskService::addTask)
