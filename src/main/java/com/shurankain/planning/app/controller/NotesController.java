@@ -50,6 +50,12 @@ public class NotesController {
         return ResponseEntity.ok().body(insertedNote);
     }
 
+    @PutMapping("/notes/{id}")
+    public ResponseEntity<Note> editNoteText(@PathVariable String id, @RequestParam String noteText){
+        var note = noteService.editNoteText(id, noteText);
+        return ResponseEntity.ok().body(note);
+    }
+
     @DeleteMapping("/notes/{id}")
     public ResponseEntity<Object> deleteNote(@PathVariable String id) {
         noteService.deleteNote(id);

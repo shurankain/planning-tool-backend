@@ -50,6 +50,13 @@ public class NoteService {
                 .build());
     }
 
+    public Note editNoteText(String id, String noteText) {
+        var noteToChange = noteRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("No note with such id found :: " + id));
+        noteToChange.setNoteText(noteText);
+        return noteRepository.save(noteToChange);
+    }
+
     public void deleteNote(String id) {
         noteRepository.deleteById(id);
     }
