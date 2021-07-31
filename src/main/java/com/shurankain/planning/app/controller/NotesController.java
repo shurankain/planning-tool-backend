@@ -1,6 +1,7 @@
 package com.shurankain.planning.app.controller;
 
 import com.shurankain.planning.app.dto.NoteDto;
+import com.shurankain.planning.app.dto.NoteWithTasksDto;
 import com.shurankain.planning.app.persistence.model.Note;
 import com.shurankain.planning.app.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +52,8 @@ public class NotesController {
     }
 
     @PutMapping("/notes/{id}")
-    public ResponseEntity<Note> editNoteText(@PathVariable String id, @RequestParam String noteText){
-        var note = noteService.editNoteText(id, noteText);
+    public ResponseEntity<Note> editNote(@PathVariable String id, @RequestBody NoteWithTasksDto noteDto){
+        var note = noteService.editNoteText(id, noteDto.getNoteText());
         return ResponseEntity.ok().body(note);
     }
 

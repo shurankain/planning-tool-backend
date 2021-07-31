@@ -5,15 +5,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskDto {
-    private String id;
-    private String taskInfo;
-    private LocalDateTime creationDate;
-    private Boolean completionStatus;
+public class NoteWithTasksDto {
+    private String noteText;
+    private List<TaskDto> tasks;
 }
