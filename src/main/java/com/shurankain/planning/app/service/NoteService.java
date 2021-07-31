@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.shurankain.planning.app.dto.NoteWithTasksDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,10 +51,17 @@ public class NoteService {
                 .build());
     }
 
-    public Note editNoteText(String id, String noteText) {
+    public Note editNote(String id, NoteWithTasksDto noteWithTasksDto) {
         var noteToChange = noteRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("No note with such id found :: " + id));
-        noteToChange.setNoteText(noteText);
+        noteToChange.setNoteText(noteWithTasksDto.getNoteText());
+        List<Task> tasks = noteWithTasksDto.getTasks().stream().map(taskDto -> Task.builder()
+                .id(taskDto.getId())
+                .taskInfo(taskDto.getTaskInfo())
+                .creationDate(taskDto.getCreationDate())
+                .completionStatus(taskDto.getCompletionStatus())
+                .build()).collect(Collectors.toList());
+        noteToChange.setTasks(tasks);
         return noteRepository.save(noteToChange);
     }
 

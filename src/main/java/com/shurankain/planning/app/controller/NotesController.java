@@ -53,7 +53,7 @@ public class NotesController {
 
     @PutMapping("/notes/{id}")
     public ResponseEntity<Note> editNote(@PathVariable String id, @RequestBody NoteWithTasksDto noteDto){
-        var note = noteService.editNoteText(id, noteDto.getNoteText());
+        var note = noteService.editNote(id, noteDto);
         return ResponseEntity.ok().body(note);
     }
 
