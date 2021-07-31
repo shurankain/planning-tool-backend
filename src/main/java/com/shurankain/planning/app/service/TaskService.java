@@ -26,7 +26,7 @@ public class TaskService {
 
     public Task getTaskById(String id) {
         return taskRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("No task with such id found :: " + id));
+                .orElse(null);
     }
 
     public Long getTotalTasksAmount() {

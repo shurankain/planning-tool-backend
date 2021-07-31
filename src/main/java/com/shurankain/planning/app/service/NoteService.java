@@ -32,7 +32,7 @@ public class NoteService {
 
     public Note getNoteById(String id) {
         return noteRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("No note with such id found :: " + id));
+                .orElse(null);
     }
 
     public List<Note> getNotesByTextPresent(String text) {
