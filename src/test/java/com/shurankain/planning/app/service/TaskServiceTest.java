@@ -62,19 +62,17 @@ class TaskServiceTest {
         when(taskRepository.findById(TASK_ID)).thenReturn(Optional.of(createMockTask()));
         when(taskRepository.save(any(Task.class))).thenReturn(createMockTask());
 
-        var addedTask = taskService.editTask(createMockTaskDto());
+        var addedTask = taskService.editTask(TASK_ID, createMockTaskDto());
 
         verify(taskRepository, times(1)).findById(TASK_ID);
         verify(taskRepository, times(1)).save(taskCaptor.capture());
         assertEquals(TASK_ID, addedTask.getId());
         assertEquals(TASK_INFO, addedTask.getTaskInfo());
-        assertEquals(CREATION_DATE, addedTask.getCreationDate());
         assertFalse(addedTask.isCompletionStatus());
 
         Task capturedTask = taskCaptor.getValue();
         assertEquals(TASK_ID, capturedTask.getId());
         assertEquals(TASK_INFO, capturedTask.getTaskInfo());
-        assertEquals(CREATION_DATE, capturedTask.getCreationDate());
         assertFalse(capturedTask.isCompletionStatus());
     }
 
@@ -89,7 +87,6 @@ class TaskServiceTest {
 
     private TaskDto createMockTaskDto() {
         return TaskDto.builder()
-                .id(TASK_ID)
                 .taskInfo(TASK_INFO)
                 .creationDate(CREATION_DATE)
                 .completionStatus(false)

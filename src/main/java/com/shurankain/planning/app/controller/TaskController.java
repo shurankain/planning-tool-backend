@@ -1,20 +1,14 @@
 package com.shurankain.planning.app.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.shurankain.planning.app.dto.TaskDto;
 import com.shurankain.planning.app.persistence.model.Task;
 import com.shurankain.planning.app.service.TaskService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class TaskController {
@@ -56,9 +50,15 @@ public class TaskController {
         return ResponseEntity.ok().body(insertedTask);
     }
 
-    @PutMapping("/tasks")
-    public ResponseEntity<Task> editTask(@RequestBody TaskDto taskDto) {
-        var editedTask = taskService.editTask(taskDto);
-        return ResponseEntity.ok().body(editedTask);
+    @PutMapping("/tasks/{id}")
+    public ResponseEntity<Task> editTask(@PathVariable String id, @RequestBody TaskDto taskDto) {
+        var task = taskService.editTask(id, taskDto);
+        return ResponseEntity.ok().body(task);
+    }
+
+    @DeleteMapping("/tasks/{id}")
+    public ResponseEntity<Object> deleteTask(@PathVariable String id) {
+        taskService.deleteTask(id);
+        return ResponseEntity.ok().build();
     }
 }

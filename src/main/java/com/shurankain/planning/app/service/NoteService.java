@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.shurankain.planning.app.dto.NoteWithTasksDto;
+import com.shurankain.planning.app.dto.TaskDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +57,6 @@ public class NoteService {
                 .orElseThrow(() -> new IllegalStateException("No note with such id found :: " + id));
         noteToChange.setNoteText(noteWithTasksDto.getNoteText());
         List<Task> tasks = noteWithTasksDto.getTasks().stream().map(taskDto -> Task.builder()
-                .id(taskDto.getId())
                 .taskInfo(taskDto.getTaskInfo())
                 .creationDate(taskDto.getCreationDate())
                 .completionStatus(taskDto.getCompletionStatus())
@@ -65,9 +65,21 @@ public class NoteService {
         return noteRepository.save(noteToChange);
     }
 
+    public Note addTaskToNote(String id, TaskDto taskDto) {
+        var noteToChange = noteRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("No note with such id found :: " + id));
+        var task = taskService.addTask(taskDto.getTaskInfo());
+        var taskList = noteToChange.getTasks();
+        taskList.add(task);
+        noteToChange.setTasks(taskList);
+        return noteRepository.save(noteToChange);
+    }
+
     public void deleteNote(String id) {
         noteRepository.deleteById(id);
     }
+
+
 
     private List<Task> saveTasksToObtainId(List<String> tasksInfo) {
         return tasksInfo.stream()

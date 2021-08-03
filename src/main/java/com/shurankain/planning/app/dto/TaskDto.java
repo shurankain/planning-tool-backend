@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TaskDto {
-    private String id;
     private String taskInfo;
     private LocalDateTime creationDate;
     private Boolean completionStatus;
