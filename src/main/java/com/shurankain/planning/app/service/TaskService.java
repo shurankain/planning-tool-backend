@@ -2,7 +2,6 @@ package com.shurankain.planning.app.service;
 
 import com.shurankain.planning.app.dto.TaskDto;
 import com.shurankain.planning.app.persistence.model.Task;
-import com.shurankain.planning.app.persistence.repsoitory.NoteRepository;
 import com.shurankain.planning.app.persistence.repsoitory.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

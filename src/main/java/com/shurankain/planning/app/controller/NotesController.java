@@ -5,7 +5,6 @@ import com.shurankain.planning.app.dto.NoteWithTasksDto;
 import com.shurankain.planning.app.dto.TaskDto;
 import com.shurankain.planning.app.persistence.model.Note;
 import com.shurankain.planning.app.service.NoteService;
-import com.shurankain.planning.app.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -54,13 +53,13 @@ public class NotesController {
     }
 
     @PutMapping("/notes/{id}")
-    public ResponseEntity<Note> editNote(@PathVariable String id, @RequestBody NoteWithTasksDto noteDto){
+    public ResponseEntity<Note> editNote(@PathVariable String id, @RequestBody NoteWithTasksDto noteDto) {
         var note = noteService.editNote(id, noteDto);
         return ResponseEntity.ok().body(note);
     }
 
     @PutMapping("/notes/{id}/addTask")
-    public ResponseEntity<Note> addTaskToNote(@PathVariable String id, @RequestBody TaskDto taskDto){
+    public ResponseEntity<Note> addTaskToNote(@PathVariable String id, @RequestBody TaskDto taskDto) {
         var note = noteService.addTaskToNote(id, taskDto);
         return ResponseEntity.ok().body(note);
     }

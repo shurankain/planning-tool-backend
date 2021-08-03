@@ -1,13 +1,12 @@
 package com.shurankain.planning.app.security.service;
 
-import java.util.Collection;
-import java.util.Collections;
-
+import com.shurankain.planning.app.security.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.shurankain.planning.app.security.model.User;
+import java.util.Collection;
+import java.util.Collections;
 
 public class CustomUserDetails implements UserDetails {
 

@@ -1,19 +1,9 @@
 package com.shurankain.planning.app.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-
+import com.shurankain.planning.app.dto.NoteDto;
+import com.shurankain.planning.app.persistence.model.Note;
+import com.shurankain.planning.app.persistence.model.Task;
+import com.shurankain.planning.app.persistence.repsoitory.NoteRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -22,10 +12,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.shurankain.planning.app.dto.NoteDto;
-import com.shurankain.planning.app.persistence.model.Note;
-import com.shurankain.planning.app.persistence.model.Task;
-import com.shurankain.planning.app.persistence.repsoitory.NoteRepository;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class NoteServiceTest {
@@ -50,12 +44,10 @@ class NoteServiceTest {
 
     @Test
     void whenAddNoteCalledThenSavedNoteInfoShouldBeReturned() {
-        when(taskService.addTask(anyString())).thenReturn(createMockTask());
         when(noteRepository.insert(any(Note.class))).thenReturn(constructNote());
 
         var addedNote = noteService.addNote(constructNoteDto());
 
-        verify(taskService, times(3)).addTask(taskInfoCaptor.capture());
         verify(noteRepository, times(1)).insert(noteCaptor.capture());
 
         assertEquals(NOTE_ID, addedNote.getId());

@@ -1,18 +1,17 @@
 package com.shurankain.planning.app.service;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.shurankain.planning.app.dto.NoteDto;
 import com.shurankain.planning.app.dto.NoteWithTasksDto;
 import com.shurankain.planning.app.dto.TaskDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.shurankain.planning.app.dto.NoteDto;
 import com.shurankain.planning.app.persistence.model.Note;
 import com.shurankain.planning.app.persistence.model.Task;
 import com.shurankain.planning.app.persistence.repsoitory.NoteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NoteService {
