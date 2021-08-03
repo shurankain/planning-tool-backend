@@ -48,7 +48,7 @@ public class NoteService {
         return noteRepository.insert(Note.builder()
                 .noteText(noteDto.getNoteText())
                 .creationDate(LocalDateTime.now())
-                .tasks(saveTasksToObtainId(noteDto.getTasks()))
+                .tasks(noteDto.getTasks().stream().map(dtoTask -> Task.builder().taskInfo(dtoTask).build()).collect(Collectors.toList()))
                 .build());
     }
 
@@ -77,13 +77,5 @@ public class NoteService {
 
     public void deleteNote(String id) {
         noteRepository.deleteById(id);
-    }
-
-
-
-    private List<Task> saveTasksToObtainId(List<String> tasksInfo) {
-        return tasksInfo.stream()
-                .map(taskService::addTask)
-                .collect(Collectors.toList());
     }
 }

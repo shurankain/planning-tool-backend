@@ -9,18 +9,15 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
 
     private final TaskRepository taskRepository;
-    private final NoteRepository noteRepository;
 
     @Autowired
-    public TaskService(TaskRepository taskRepository, NoteRepository noteRepository) {
+    public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
-        this.noteRepository = noteRepository;
     }
 
     public List<Task> getAllTasks() {
@@ -52,12 +49,7 @@ public class TaskService {
     }
 
     public void deleteTask(String id) {
-        var notesList = noteRepository.findAll();
-        var allFilteredNotes = notesList.stream().peek(note -> {
-            var tasks = note.getTasks().stream().filter(task -> !task.getId().equals(id)).collect(Collectors.toList());
-            note.setTasks(tasks);
-        }).collect(Collectors.toList());
-        noteRepository.saveAll(allFilteredNotes);
+        taskRepository.deleteById(id);
     }
 
     private Task constructTask(String taskInfo) {
