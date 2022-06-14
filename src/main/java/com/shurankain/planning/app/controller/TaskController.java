@@ -12,7 +12,6 @@ import java.util.List;
 
 @Controller
 public class TaskController {
-
     private final TaskService taskService;
 
     @Autowired

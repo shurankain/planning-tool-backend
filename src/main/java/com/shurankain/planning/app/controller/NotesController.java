@@ -14,7 +14,6 @@ import java.util.List;
 
 @Controller
 public class NotesController {
-
     private final NoteService noteService;
 
     @Autowired
